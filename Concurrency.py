@@ -16,7 +16,7 @@ def long_process(id, start_number, end_number, input_data, result):
     sum = 0
     for x in range(start_number, end_number):
         sum += input_data[x]
-        time.sleep(0.5)
+        #time.sleep(0.5)
     result[id] = sum
 
 def sum_by_threads(thread_quantaties, input_data):
@@ -37,7 +37,8 @@ def sum_by_threads(thread_quantaties, input_data):
         start_number = end_number
     for i in range(len(threads)):
         threads[i].start()
-        threads[i].join()
+        time.sleep(1)
+        #threads[i].join()
     for key in result:
         output_res += result[key]
     print(result)
@@ -54,7 +55,7 @@ def just_sum (input_data):
 
 def test ():
     #Проверка корректности суммирования
-    data_gen=input_data_generation(100, 1, 10)
+    data_gen=input_data_generation(10, 1, 5)
     res_by_threds = sum_by_threads(5, data_gen)
     ordinary_sum=just_sum(data_gen)
     if res_by_threds == ordinary_sum:
