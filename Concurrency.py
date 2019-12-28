@@ -37,7 +37,7 @@ def sum_by_threads(thread_quantaties, input_data):
         start_number = end_number
     for i in range(len(threads)):
         threads[i].start()
-        time.sleep(1)
+        #time.sleep(1)
         #threads[i].join()
     for key in result:
         output_res += result[key]
@@ -49,15 +49,15 @@ def just_sum (input_data):
     #Обычное суммирование
     res=0
     for i in range(len(input_data)):
-        res +=input_data[i]
+        res += input_data[i]
     print(res)
     return res
 
 def test ():
     #Проверка корректности суммирования
-    data_gen=input_data_generation(10, 1, 5)
-    res_by_threds = sum_by_threads(5, data_gen)
-    ordinary_sum=just_sum(data_gen)
+    data_gen=input_data_generation(100000, 1, 10)
+    res_by_threds = sum_by_threads(10, data_gen)
+    ordinary_sum = just_sum(data_gen)
     if res_by_threds == ordinary_sum:
         print("Success")
     else:
