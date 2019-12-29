@@ -24,7 +24,6 @@ def sum_by_threads(thread_quantaties, input_data):
     output_res = 0
     result = {}
     threads = []
-    threads_status=[]
     start_number = 0
     q_ty = len(input_data)
     q_ty_of_number_for_each_thread=int(q_ty/thread_quantaties)
@@ -38,15 +37,17 @@ def sum_by_threads(thread_quantaties, input_data):
         start_number = end_number
     for i in range(len(threads)):
         threads[i].start()  
-    while True == True :
+    while True == True:
+        flag = True
         for every_status in range(len(threads)):
-            threads_status.append(threads[every_status].is_alive()) 
-        print(threads_status)
-        if True in threads_status:
-            threads_status.clear()
-        else:
-            break 
-    
+            if threads[every_status].is_alive() == True: 
+                time.sleep(0.1)
+                break
+            else:
+                if every_status == len(threads)-1:
+                    flag = False
+        if flag == False:
+            break
     for key in result:
         output_res += result[key]
     print(result)
@@ -63,7 +64,7 @@ def just_sum (input_data):
 
 def test ():
     #Проверка корректности суммирования
-    data_gen=input_data_generation(1000, 1, 10)
+    data_gen=input_data_generation(100000, 1, 10)
     res_by_threds = sum_by_threads(10, data_gen)
     ordinary_sum = just_sum(data_gen)
     if res_by_threds == ordinary_sum:
@@ -73,6 +74,7 @@ def test ():
 
 
 test()
+
 
 
 
