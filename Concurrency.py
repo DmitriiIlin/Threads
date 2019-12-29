@@ -16,7 +16,7 @@ def long_process(id, start_number, end_number, input_data, result):
     sum = 0
     for x in range(start_number, end_number):
         sum += input_data[x]
-        #time.sleep(0.5)
+        time.sleep(0.05)
     result[id] = sum
 
 def sum_by_threads(thread_quantaties, input_data):
@@ -24,6 +24,7 @@ def sum_by_threads(thread_quantaties, input_data):
     output_res = 0
     result = {}
     threads = []
+    threads_status=[]
     start_number = 0
     q_ty = len(input_data)
     q_ty_of_number_for_each_thread=int(q_ty/thread_quantaties)
@@ -36,9 +37,16 @@ def sum_by_threads(thread_quantaties, input_data):
         threads[every_thread] = Thread(target = long_process, name = "Thread N "+ str(every_thread), args = ("ID" + str(every_thread), start_number, end_number, input_data, result))
         start_number = end_number
     for i in range(len(threads)):
-        threads[i].start()
-        #time.sleep(1)
-        #threads[i].join()
+        threads[i].start()  
+    while True == True :
+        for every_status in range(len(threads)):
+            threads_status.append(threads[every_status].is_alive()) 
+        print(threads_status)
+        if True in threads_status:
+            threads_status.clear()
+        else:
+            break 
+    
     for key in result:
         output_res += result[key]
     print(result)
@@ -55,7 +63,7 @@ def just_sum (input_data):
 
 def test ():
     #Проверка корректности суммирования
-    data_gen=input_data_generation(100000, 1, 10)
+    data_gen=input_data_generation(1000, 1, 10)
     res_by_threds = sum_by_threads(10, data_gen)
     ordinary_sum = just_sum(data_gen)
     if res_by_threds == ordinary_sum:
