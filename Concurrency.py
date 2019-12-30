@@ -41,12 +41,9 @@ def sum_by_threads(thread_quantaties, input_data):
         flag = True
         for every_status in range(len(threads)):
             if threads[every_status].is_alive() == True: 
-                time.sleep(0.1)
-                break
-            else:
-                if every_status == len(threads)-1:
-                    flag = False
-        if flag == False:
+                flag = False
+                time.sleep(0.1)               
+        if flag == True:
             break
     for key in result:
         output_res += result[key]
@@ -64,7 +61,7 @@ def just_sum (input_data):
 
 def test ():
     #Проверка корректности суммирования
-    data_gen=input_data_generation(100000, 1, 10)
+    data_gen=input_data_generation(1000, 1, 10)
     res_by_threds = sum_by_threads(10, data_gen)
     ordinary_sum = just_sum(data_gen)
     if res_by_threds == ordinary_sum:
